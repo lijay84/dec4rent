@@ -9,7 +9,6 @@
     background-size: cover;
     left: 0;
     right: 0;
-    margin-bottom: 100px;
     display: flex;
     font-family: "Roboto Condensed", sans-serif;
     .text {

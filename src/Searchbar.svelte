@@ -1,14 +1,14 @@
 <script>
   let query = "";
   let result;
-  let bro = {};
+  let storeResult = {};
   let inputValue = "";
 let mapurl = `https://maps.googleapis.com/maps/api/js?key=${process.env.gmapsKey}&libraries=places`
   function handleClick(event) {
     if (event.target.value != "") {
       getResult(event.target.value);
     } else {
-      bro = {};
+      storeResult = {};
     }
   }
   function handleErrors(response) {
@@ -39,7 +39,7 @@ let mapurl = `https://maps.googleapis.com/maps/api/js?key=${process.env.gmapsKey
 
   function getGmapsResults() {
     if (document.getElementsByClassName("pac-container").length == 0) {
-      bro = {};
+      storeResult = {};
       var input = document.getElementById("searchGoogle");
       var options = {
         types: ["(cities)"],
@@ -62,14 +62,14 @@ let mapurl = `https://maps.googleapis.com/maps/api/js?key=${process.env.gmapsKey
         if (document.querySelector(".pac-container") != null) {
           document.querySelector(".pac-container").remove();
         }
-        bro = stores;
+        storeResult = stores;
       }
     }
   }
 
   function chooseStore(store) {
     inputValue = store.name;
-    bro = {};
+    storeResult = {};
   }
 </script>
 
@@ -151,9 +151,9 @@ let mapurl = `https://maps.googleapis.com/maps/api/js?key=${process.env.gmapsKey
       placeholder="seleziona un luogo"
       on:input={handleClick}
       value={inputValue || ''} />
-    {#if bro.length > 0}
+    {#if storeResult.length > 0}
       <div class="container-stores">
-        {#each bro as item}
+        {#each storeResult as item}
           <div class="item-store" on:click={e => chooseStore(item)}>
             {item.name}
           </div>

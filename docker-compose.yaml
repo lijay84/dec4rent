@@ -12,6 +12,9 @@ services:
       - "35729:35729"
     networks:
       - svelte
+    environment: 
+      - DKRENT_URL=https://api-eu.preprod.decathlon.net/dktrent/api/v1/sites/
+      - GMAPS_KEY=AIzaSyBhajfNAGnRtcO-aBnNNknin_z017itOsM
   e2e:
     image: cypress/included:3.8.0
     working_dir: "/app"

@@ -4,8 +4,11 @@ import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import autoPreprocess from 'svelte-preprocess';
+import replace from '@rollup/plugin-replace';
 
 const production = !process.env.ROLLUP_WATCH;
+const dkrentUrl = process.env.DKRENT_URL;
+const gmapsKey = process.env.GMAPS_KEY;
 
 export default {
 	input: 'src/main.js',
@@ -27,7 +30,17 @@ export default {
 			preprocess: autoPreprocess()
 
 		}),
-		
+		replace({
+			FOO: 'bar',
+	  
+			// 2 level deep object should be stringify
+			process: JSON.stringify({
+			  env: {
+				dkrentUrl: dkrentUrl,
+				gmapsKey : gmapsKey,
+			  }
+			}),
+		  }),
 		
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In

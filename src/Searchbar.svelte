@@ -2,9 +2,9 @@
   let query = "";
   let result;
   let bro = {};
-
+  let inputValue = "";
+let mapurl = `https://maps.googleapis.com/maps/api/js?key=${process.env.gmapsKey}&libraries=places`
   function handleClick(event) {
-    console.log("test", event.target.value);
     if (event.target.value != "") {
       getResult(event.target.value);
     } else {
@@ -19,7 +19,7 @@
     return response;
   }
   async function getResult(query) {
-    let protectedUrl = `https://api-eu.preprod.decathlon.net/dktrent/api/v1/sites/full-text-search.json?fullTextToSearch=${query}`;
+    let protectedUrl = `${process.env.dkrentUrl}full-text-search.json?fullTextToSearch=${query}`;
 
     await fetch(protectedUrl, {
       method: "GET",
@@ -63,9 +63,13 @@
           document.querySelector(".pac-container").remove();
         }
         bro = stores;
-        bro = stores;
       }
     }
+  }
+
+  function chooseStore(store) {
+    inputValue = store.name;
+    bro = {};
   }
 </script>
 
@@ -85,7 +89,7 @@
     text-transform: uppercase;
     font-family: "Roboto Condensed", serif;
     align-items: center;
-    cursor: default;
+    cursor: pointer;
     border: 0;
     font-size: 16px;
     min-height: 45px;
@@ -121,7 +125,23 @@
     margin: 0;
     background-color: white;
   }
+  @media (max-width: 575px) {
+    .search-container {
+      flex-direction: column;
+    }
+    .item {
+      width: 100%;
+      margin: 10px 0 0 0;
+    }
+    .container-stores {
+      z-index: 2;
+    }
+  }
 </style>
+
+<svelte:head>
+	<script src={mapurl} async defer></script>
+</svelte:head>
 
 <div class="search-container">
   <div class="item">
@@ -129,11 +149,14 @@
       type="text"
       id="searchGoogle"
       placeholder="seleziona un luogo"
-      on:input={handleClick} />
+      on:input={handleClick}
+      value={inputValue || ''} />
     {#if bro.length > 0}
       <div class="container-stores">
         {#each bro as item}
-          <div class="item-store">{item.name}</div>
+          <div class="item-store" on:click={e => chooseStore(item)}>
+            {item.name}
+          </div>
         {/each}
       </div>
     {/if}

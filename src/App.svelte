@@ -12,8 +12,6 @@
 
   
 </script>
-
-
 <main>
   <Hero heroProps={banner} />
 <Searchbar />

@@ -9,10 +9,9 @@
     discount: 50,
     bgImage: "https://rent.decathlon.it/background.9f83f538e01e3e7338bb.webp"
   };
-
-  
 </script>
+
 <main>
   <Hero heroProps={banner} />
-<Searchbar />
+  <Searchbar />
 </main>

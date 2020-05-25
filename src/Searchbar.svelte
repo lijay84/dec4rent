@@ -3,7 +3,8 @@
   let result;
   let storeResult = {};
   let inputValue = "";
-let mapurl = `https://maps.googleapis.com/maps/api/js?key=${process.env.gmapsKey}&libraries=places`
+  let mapurl = `https://maps.googleapis.com/maps/api/js?key=${process.env.gmapsKey}&libraries=places`;
+
   function handleClick(event) {
     if (event.target.value != "") {
       getResult(event.target.value);
@@ -11,6 +12,7 @@ let mapurl = `https://maps.googleapis.com/maps/api/js?key=${process.env.gmapsKey
       storeResult = {};
     }
   }
+
   function handleErrors(response) {
     if (!response.ok) {
       if (document.getElementsByClassName("pac-container").length == 0)
@@ -18,7 +20,9 @@ let mapurl = `https://maps.googleapis.com/maps/api/js?key=${process.env.gmapsKey
     }
     return response;
   }
+
   async function getResult(query) {
+
     let protectedUrl = `${process.env.dkrentUrl}full-text-search.json?fullTextToSearch=${query}`;
 
     await fetch(protectedUrl, {
@@ -40,8 +44,8 @@ let mapurl = `https://maps.googleapis.com/maps/api/js?key=${process.env.gmapsKey
   function getGmapsResults() {
     if (document.getElementsByClassName("pac-container").length == 0) {
       storeResult = {};
-      var input = document.getElementById("searchGoogle");
-      var options = {
+      let input = document.getElementById("searchGoogle");
+      let options = {
         types: ["(cities)"],
         componentRestrictions: { country: "it" }
       };
@@ -51,8 +55,7 @@ let mapurl = `https://maps.googleapis.com/maps/api/js?key=${process.env.gmapsKey
 
   function checkResults(data, stringToSearch) {
     let stores = {};
-    var re =
-      stringToSearch != "" ? new RegExp(stringToSearch.toLowerCase(), "g") : "";
+    let re = stringToSearch != "" ? new RegExp(stringToSearch.toLowerCase(), "g") : "";
 
     if (data.length > 0) {
       stores = Object.values(data).filter(store =>
@@ -71,6 +74,7 @@ let mapurl = `https://maps.googleapis.com/maps/api/js?key=${process.env.gmapsKey
     inputValue = store.name;
     storeResult = {};
   }
+
 </script>
 
 <style type="text/scss">
@@ -140,7 +144,9 @@ let mapurl = `https://maps.googleapis.com/maps/api/js?key=${process.env.gmapsKey
 </style>
 
 <svelte:head>
-	<script src={mapurl} async defer></script>
+  <script src={mapurl} async defer>
+
+  </script>
 </svelte:head>
 
 <div class="search-container">
